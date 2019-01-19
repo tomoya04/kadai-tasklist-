@@ -1,12 +1,37 @@
 <% if logged_in? %>
     <p>ログイン完了ユーザー<%= current_user.name %></p>
-
-<% else %>
-<div class = "center jumbotron">
-   <div class ="text-center">
-    <h3>Tasklistへようこそ</h3>
-    <%= link_to "新規登録", signup_path, class: "btn btn-primary" %>
+     <div class ="row">
+      <aside class="col-md-4">
+        
+        <%= form_for(@task) do |f| %>
+          
+         <%= render "layouts/error_messages",model: f.object  %>
+            <div class="form-group ">
+                <%= f.label :content, "タスク" %>
+                <%= f.text_field :content,class: "form-control" %>
+            </div>
+            
+            <div class="form-group">
+            <%= f.label :status, "ステータス" %>
+            <%= f.text_field :status, class: "form-control" %>
+            </div>
+            
+            <%= f.submit "投稿" ,class: "btn btn-default" %>
+        <% end %>
+       </aside>
+       <div>
+        <!-- タスク投稿一覧が入る-->
+        <%= render "tasks/tasks",tasks: @tasks %>
+       </div>
+       
+     </div><!-- row-->
+       
+       <% else %>
+   <div class = "center jumbotron">
+      <div class ="text-center">
+         <h3>Tasklistへようこそ</h3>
+         <%= link_to "新規登録", signup_path, class: "btn btn-primary" %>
+      </div>
    </div>
-</div>
 
 <% end %>
